@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>정보 시험범위 압축 노트</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=IBM+Plex+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EEF1F5; --sheet:#FFFFFF; --ink:#1C2333; --sub:#5A6478; --line:#D5DBE5;
+  --u1:#3646C2; --u1s:#E6E9FA;
+  --u2:#0E7F73; --u2s:#DFF3F0;
+  --u3:#9B3369; --u3s:#F7E4EE;
+  --warn:#B86E00; --warns:#FFF2D6;
+  --mask:#C8283A;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#12161E; --sheet:#1B212C; --ink:#E6EAF1; --sub:#9AA4B6; --line:#2E3746;
+    --u1:#8D99FF; --u1s:#252C52;
+    --u2:#4FD1BF; --u2s:#163A36;
+    --u3:#F08BBE; --u3s:#40213A;
+    --warn:#FFC25C; --warns:#3A2E14;
+    --mask:#E0505F;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#12161E; --sheet:#1B212C; --ink:#E6EAF1; --sub:#9AA4B6; --line:#2E3746;
+  --u1:#8D99FF; --u1s:#252C52;
+  --u2:#4FD1BF; --u2s:#163A36;
+  --u3:#F08BBE; --u3s:#40213A;
+  --warn:#FFC25C; --warns:#3A2E14;
+  --mask:#E0505F;
+  color-scheme:dark;
+}
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 64px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;font-size:15px;line-height:1.6;word-break:keep-all}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--sheet)}
+code{font-family:ui-monospace,Consolas,monospace;font-size:.92em;background:var(--bg);padding:0 .3em;border-radius:3px}
+
+/* top bar */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--sheet);border-bottom:1px solid var(--line)}
+.bar-in{max-width:1180px;margin:0 auto;padding:10px 16px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.bar h1{font-family:"Black Han Sans","IBM Plex Sans KR",sans-serif;font-weight:400;font-size:20px;margin:0 12px 0 0;letter-spacing:.01em}
+.bar nav{display:flex;gap:6px;flex-wrap:wrap;flex:1}
+.bar nav a{text-decoration:none;color:var(--ink);font-size:13px;font-weight:500;padding:4px 10px;border-radius:999px;border:1px solid var(--line)}
+.bar nav a[href="#u1"]{border-color:var(--u1);color:var(--u1)}
+.bar nav a[href="#u2"]{border-color:var(--u2);color:var(--u2)}
+.bar nav a[href="#u3"]{border-color:var(--u3);color:var(--u3)}
+.toggle{font:inherit;font-size:13px;font-weight:700;cursor:pointer;border:2px solid var(--mask);color:var(--mask);background:transparent;padding:4px 12px;border-radius:6px}
+.toggle[aria-pressed="true"]{background:var(--mask);color:#fff}
+.hint{font-size:12px;color:var(--sub);width:100%;margin:0}
+
+main{max-width:1180px;margin:0 auto;padding:20px 16px 60px}
+
+/* unit */
+.unit{margin-top:28px}
+.uh{display:flex;align-items:baseline;gap:14px;border-bottom:3px solid var(--c);padding-bottom:6px;margin-bottom:16px}
+.uh .num{font-family:"Black Han Sans",sans-serif;font-size:48px;line-height:1;color:var(--c)}
+.uh h2{font-family:"Black Han Sans",sans-serif;font-weight:400;font-size:26px;margin:0}
+.uh p{margin:0 0 0 auto;font-size:13px;color:var(--sub)}
+#u1{--c:var(--u1);--cs:var(--u1s)}
+#u2{--c:var(--u2);--cs:var(--u2s)}
+#u3{--c:var(--u3);--cs:var(--u3s)}
+#mix{--c:var(--warn);--cs:var(--warns)}
+
+.grid{columns:3 320px;column-gap:14px}
+.blk{break-inside:avoid;background:var(--sheet);border:1px solid var(--line);border-left:4px solid var(--c);border-radius:6px;padding:12px 14px;margin:0 0 14px}
+.blk h3{font-size:15px;margin:0 0 8px;color:var(--c)}
+.blk p{margin:0 0 6px}
+.blk ul{margin:0;padding-left:1.1em}
+.blk li{margin:2px 0}
+.blk.wide{column-span:all}
+
+/* key term (maskable) */
+.a{font-weight:700;border-radius:3px;padding:0 2px;transition:background .15s,color .15s}
+body.masked .a{background:var(--mask);color:transparent;cursor:pointer;user-select:none}
+body.masked .a.open{background:transparent;color:var(--mask)}
+.a:focus-visible,.toggle:focus-visible,.bar nav a:focus-visible{outline:2px solid var(--c,var(--u1));outline-offset:2px}
+
+/* compact table */
+.t{width:100%;border-collapse:collapse;font-size:13.5px}
+.t th,.t td{border-bottom:1px solid var(--line);padding:4px 6px;text-align:left;vertical-align:top}
+.t th{font-weight:700;color:var(--sub);font-size:12.5px}
+.t td:first-child{white-space:nowrap;font-weight:500}
+.tw{overflow-x:auto}
+
+.warn{background:var(--warns);border-radius:4px;padding:6px 8px;margin-top:8px;font-size:13.5px}
+.warn::before{content:"혼동 ";font-weight:700;color:var(--warn)}
+
+/* chips */
+.chips{display:flex;flex-wrap:wrap;gap:5px;margin:4px 0}
+.chips span{background:var(--cs);border-radius:4px;padding:1px 7px;font-size:13px}
+
+.cg{margin:8px 0 0}
+.cg>b{display:block;font-size:13px;color:var(--c);margin-bottom:2px}
+/* model groups */
+.mg{display:grid;grid-template-columns:1fr 2fr 1fr;gap:10px;margin-top:4px}
+.mcol{border:2px solid var(--c);border-radius:8px;padding:8px;display:flex;flex-direction:column;gap:8px}
+.mcol>header{background:var(--c);color:#fff;border-radius:5px;padding:5px 8px;font-size:13px;line-height:1.4}
+.mcol>header b{display:block;font-size:15px}
+.mcol.cls .mlist{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.mlist{display:flex;flex-direction:column;gap:8px}
+.mdl{background:var(--cs);border-radius:6px;padding:8px 10px;font-size:14px}
+.mdl h4{margin:0 0 4px;font-size:14.5px;color:var(--c)}
+.mdl p{margin:0 0 4px}
+.mdl ul,.mdl ol{margin:0}
+@media (max-width:900px){.mg{grid-template-columns:1fr}}
+@media (max-width:560px){.mcol.cls .mlist{grid-template-columns:1fr}}
+.blk .sh{margin:12px 0 4px;padding-top:8px;border-top:1px dashed var(--line);font-weight:700;color:var(--c)}
+/* nesting diagram */
+.nest{border:2px solid var(--c);border-radius:10px;padding:8px 10px;margin:4px 0}
+.nest .nest{margin-top:6px}
+.nest>b{display:block;color:var(--c)}
+.nest>small{display:block;color:var(--sub);font-size:12.5px;line-height:1.4}
+.nest .nest{background:var(--cs)}
+.nest .nest .nest{background:var(--sheet)}
+
+/* flow */
+.flow{display:flex;flex-wrap:wrap;align-items:stretch;gap:4px;margin:4px 0}
+.flow div{flex:1 1 70px;background:var(--cs);border-radius:6px;padding:6px;text-align:center;font-size:13px;line-height:1.35;position:relative}
+.flow div b{display:block;color:var(--c)}
+.flow .arr{flex:0 0 auto;background:none;align-self:center;color:var(--c);padding:0;font-weight:700}
+.loop{text-align:center;font-size:12.5px;color:var(--sub);margin-top:2px}
+
+/* tree */
+.tree{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;text-align:center;font-size:13px}
+.tree .root{grid-column:1/-1;background:var(--c);color:#fff;border-radius:6px;padding:5px;font-weight:700}
+.tree .br{border:2px solid var(--c);border-radius:6px;padding:6px 4px}
+.tree .br b{display:block;color:var(--c)}
+.tree .br .sub{display:block;background:var(--cs);border-radius:6px;margin-top:6px;padding:6px}
+.tree .chips{justify-content:center;margin-top:5px}
+.tree .sub .chips span{background:var(--sheet)}
+.tree .cg{margin-top:4px}
+.tree .cg>b{font-size:12px;margin:0}
+.tree .br>b{font-size:15px;margin-bottom:4px}
+.fl{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:4px;margin:3px 0;font-size:13px}
+.fl .tk{border:1.5px solid var(--c);border-radius:5px;padding:0 6px;background:var(--sheet)}
+.fl .tk small{color:var(--sub);font-size:12px}
+.fl .ar{color:var(--c);font-weight:700;display:inline-flex;flex-direction:column;align-items:center;line-height:1}
+.fl .ar small{font-size:11px;font-weight:500;margin-bottom:1px}
+.fl .res{font-weight:700;color:var(--c)}
+.tree .br .flows{padding-bottom:6px;margin-bottom:2px;border-bottom:1px dashed var(--line)}
+
+/* triad */
+.triad{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.triad div{border:2px solid var(--c);border-radius:50% 50% 8px 8px;text-align:center;padding:10px 4px 6px;font-size:12.5px;line-height:1.35}
+.triad b{display:block;font-size:15px;color:var(--c)}
+
+/* steps */
+ol.steps{list-style:none;counter-reset:s;padding:0;margin:0}
+ol.steps li{counter-increment:s;position:relative;padding:3px 0 3px 30px;margin:0}
+ol.steps li::before{content:counter(s);position:absolute;left:0;top:4px;width:21px;height:21px;border-radius:50%;background:var(--c);color:#fff;font-size:12px;font-weight:700;display:grid;place-items:center}
+
+/* mix pairs */
+.pairs{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:8px}
+.pair{background:var(--sheet);border:1px solid var(--line);border-radius:6px;padding:8px 10px;font-size:13.5px}
+.pair .h{font-weight:700;display:flex;justify-content:space-between;gap:6px}
+.pair .h span:last-child{text-align:right}
+.pair .d{display:flex;justify-content:space-between;gap:6px;color:var(--sub);font-size:12.5px;line-height:1.4}
+.pair .d span:last-child{text-align:right}
+.pair .vs{color:var(--warn);font-size:12px}
+
+.note{font-size:12.5px;color:var(--sub);margin-top:30px;border-top:1px solid var(--line);padding-top:10px}
+
+@media (max-width:560px){.uh .num{font-size:36px}.uh h2{font-size:21px}.uh p{display:none}.tree{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media print{.bar{position:static}.toggle,.hint{display:none}body{background:#fff}}
+</style>
+</head>
+<body>
+<header class="bar"><div class="bar-in">
+  <h1>정보 압축 노트</h1>
+  <nav aria-label="단원 이동">
+    <a href="#u1">Ⅰ 프로그래밍</a><a href="#u2">Ⅱ 인공지능</a><a href="#u3">Ⅲ 디지털 문화</a>
+  </nav>
+  <button class="toggle" id="mask" aria-pressed="false">가림판 켜기</button>
+  <p class="hint">가림판을 켜면 핵심어가 빨간 띠로 가려진다. 띠를 누르면 하나씩 확인된다.</p>
+</div></header>
+
+<main>
+
+<!-- Ⅰ -->
+<section class="unit" id="u1">
+<div class="uh"><span class="num">Ⅰ</span><h2>알고리즘과 프로그래밍</h2><p>변수 · 연산자 · 리스트 · 제어 구조 · 함수 · 객체지향</p></div>
+<div class="grid">
+
+<div class="blk"><h3>변수와 자료형</h3>
+<p><span class="a">변수</span>: 값을 저장하는 기억 공간. <span class="a">변수명</span>: 기억 공간을 식별하는 이름.</p>
+<ul><li>가능: 대소문자, 한글, 언더바(_), 숫자</li><li>불가: <span class="a">첫 글자 숫자</span>, 파이썬 <span class="a">예약어</span></li><li>대소문자 <span class="a">구별</span></li></ul>
+<div class="warn"><code>True</code>는 예약어지만 <code>true</code>는 대소문자가 달라 변수명으로 쓸 수 있다. and, or, elif, return, break, continue 등은 <span class="a">사용 불가</span>.</div>
+<div class="tw"><table class="t"><tr><th>자료형</th><th>의미</th><th>구분</th></tr>
+<tr><td>int</td><td>정수</td><td><span class="a">수치형</span></td></tr>
+<tr><td>float</td><td>실수</td><td><span class="a">수치형</span></td></tr>
+<tr><td>bool</td><td>True / False</td><td><span class="a">논리형</span></td></tr>
+<tr><td>str</td><td>문자들의 집합</td><td><span class="a">문자형</span></td></tr>
+<tr><td>list</td><td>여러 데이터를 순서대로</td><td><span class="a">데이터 구조</span></td></tr></table></div>
+<div class="warn"><code>2025</code>는 정수형, <code>"2025"</code>는 문자열. 문자열은 큰따옴표·작은따옴표 모두 가능.</div>
+</div>
+
+<div class="blk"><h3>연산자와 우선순위</h3>
+<div class="tw"><table class="t"><tr><th>종류</th><th>연산자</th></tr>
+<tr><td>산술</td><td><code>+ - * / // % **</code></td></tr>
+<tr><td>비교</td><td><code>&gt; &lt; &gt;= &lt;= == !=</code></td></tr>
+<tr><td>논리</td><td><code>and or not</code></td></tr></table></div>
+<div class="flow" aria-label="우선순위"><div><b>1</b><span class="a">괄호</span></div><span class="arr">›</span><div><b>2</b><span class="a">산술</span></div><span class="arr">›</span><div><b>3</b><span class="a">비교</span></div><span class="arr">›</span><div><b>4</b><span class="a">논리</span></div></div>
+<p>산술 내부: <span class="a">곱·나눗셈</span>이 덧·뺄셈보다 먼저, 같은 순위는 <span class="a">왼쪽→오른쪽</span>.</p>
+<ul><li>and(논리곱): <span class="a">모든</span> 조건이 참</li><li>or(논리합): <span class="a">하나 이상</span> 참</li><li>not(논리 부정): 참·거짓 반대</li></ul>
+</div>
+
+<div class="blk"><h3>리스트</h3>
+<p>여러 데이터를 하나의 이름으로 관리. 요소의 자료형이 서로 달라도 된다.</p>
+<div class="chips"><span>요소(원소): 각각의 값</span><span>인덱스: 위치, <b class="a">0</b>부터</span><span>슬라이싱: 일부 추출</span></div>
+<div class="tw"><table class="t">
+<tr><td>append</td><td>맨 뒤에 추가</td></tr>
+<tr><td>insert</td><td>지정 인덱스에 삽입</td></tr>
+<tr><td>remove</td><td>지정한 <span class="a">값</span>과 일치하는 요소 삭제</td></tr>
+<tr><td>pop</td><td><span class="a">맨 뒤</span> 요소 삭제</td></tr>
+<tr><td>sort</td><td>오름차순 정렬</td></tr>
+<tr><td>len</td><td>요소 개수 반환</td></tr></table></div>
+<div class="warn">remove는 같은 값이 여러 개면 <span class="a">첫 번째</span> 요소만 삭제.</div>
+<p class="sh">다차원 데이터 구조</p>
+<p>데이터를 행과 열 또는 여러 차원으로 구성하여 저장. 차원: 데이터 구조를 구성하는 요소의 수.</p>
+<div class="tw"><table class="t"><tr><th>차원</th><th>구성</th><th>사례</th></tr>
+<tr><td>1차원</td><td>한 방향</td><td>한 과목의 학생별 점수</td></tr>
+<tr><td>2차원</td><td><span class="a">행, 열</span></td><td>학생별 여러 과목 점수</td></tr>
+<tr><td>3차원</td><td>행, 열, <span class="a">높이</span></td><td>여러 반의 학생별 여러 과목</td></tr></table></div>
+<ul><li>흑백 이미지 = <span class="a">2차원</span>, 밝기 0~255 (0 어둡고 255 밝음)</li><li>컬러 이미지 = <span class="a">3차원</span>, R·G·B 색상 정보</li></ul>
+</div>
+
+<div class="blk"><h3>딕셔너리</h3>
+<p><span class="a">키(key)</span>와 <span class="a">값(value)</span>이 쌍으로 이루어진 데이터 집합.</p>
+<ul><li>키: 데이터를 식별하기 위한 기준</li><li>값: 키에 대응하는 데이터</li></ul>
+</div>
+
+<div class="blk"><h3>조건문</h3>
+<div class="tw"><table class="t">
+<tr><td>단순 if</td><td>참일 때만 실행, 거짓이면 실행 안 함</td></tr>
+<tr><td>if~else</td><td>참·거짓 각각 다른 명령</td></tr>
+<tr><td>중첩</td><td>조건문 <span class="a">안에</span> 조건문</td></tr>
+<tr><td>다중 if~elif~else</td><td>여러 조건 <span class="a">순차</span> 검사</td></tr></table></div>
+<div class="warn">elif에는 조건식이 <span class="a">반드시</span> 있다. else 없이 elif만 여러 개 써도 된다.</div>
+</div>
+
+<div class="blk"><h3>반복문과 제어</h3>
+<ul><li>for: 주로 <span class="a">정해진 범위</span> 반복. 중첩 for는 내부 for가 끝나면 외부 for의 다음 반복</li>
+<li>while: 조건식이 <span class="a">참인 동안</span> 반복, 거짓이면 탈출. 조건 변수는 미리 초기화하는 경우가 많다</li>
+<li>조건식이 항상 참 → <span class="a">무한 반복</span></li></ul>
+<div class="flow"><div><b>break</b>반복문 자체를 <span class="a">종료</span></div><div><b>continue</b>현재 반복의 나머지를 건너뛰고 <span class="a">계속</span></div></div>
+</div>
+
+<div class="blk"><h3>함수</h3>
+<p>특정 기능을 수행하도록 여러 명령문을 작은 단위로 묶은 것. 반복 작성을 줄여 효율적 작성·관리.</p>
+<div class="tw"><table class="t">
+<tr><td>정의 / 호출</td><td>미리 작성 / 실행</td></tr>
+<tr><td><span class="a">매개 변수</span></td><td>호출 시 전달된 값을 받는 변수</td></tr>
+<tr><td><span class="a">인수</span></td><td>호출 시 전달하는 값</td></tr>
+<tr><td><span class="a">반환값</span></td><td>실행 결과로 호출한 곳에 전달하는 값</td></tr>
+<tr><td>return</td><td>반환값 전달 + 함수 <span class="a">종료</span></td></tr></table></div>
+<p style="margin-top:6px">내장 함수(설치 시 제공) / 외장 함수(라이브러리 <span class="a">모듈</span>에 포함) / 사용자 정의 함수</p>
+<div class="warn">매개 변수·인수·반환값은 모두 필수가 <span class="a">아니다</span>. 실행 후 호출 위치로 복귀.</div>
+</div>
+
+<div class="blk"><h3>라이브러리 ⊃ 모듈 ⊃ 함수</h3>
+<div class="nest"><b>라이브러리</b><small>여러 <span class="a">모듈</span>의 집합</small>
+  <div class="nest"><b>모듈</b><small>함수·변수·<span class="a">클래스</span> 등을 모아 놓은 파일</small>
+    <div class="nest"><b>함수</b><small>특정 기능 수행</small></div></div></div>
+<ul><li>표준: 공식 제공, 파이썬과 함께 설치</li><li>외부: 표준에 없는 추가 기능</li></ul>
+<div class="cg"><b>교과서의 <span class="a">외부</span> 라이브러리</b><div class="chips"><span>pandas: <b class="a">표</b> 데이터 조작·분석</span><span>numpy: <b class="a">다차원 배열</b>·수치 계산</span><span>matplotlib: <b class="a">시각화</b></span></div></div>
+</div>
+
+<div class="blk"><h3>객체지향 프로그래밍</h3>
+<p>현실 사물을 <span class="a">추상화</span>하여 객체로 표현하고 객체 간 상호 작용으로 구현.</p>
+<div class="flow"><div><b><span class="a">클래스</span></b>객체를 만들기 위한 설계도, 여러 객체의 <span class="a">공통된</span> 속성과 메소드를 정의</div><span class="arr">›</span><div><b><span class="a">인스턴스</span></b>클래스로 생성된 <span class="a">각각의</span> 객체</div></div>
+<div class="tw"><table class="t">
+<tr><td><span class="a">객체</span></td><td>고유한 속성과 기능을 가진 데이터</td></tr>
+<tr><td>속성 / 메소드</td><td>클래스의 <span class="a">특성</span> / <span class="a">기능</span></td></tr>
+<tr><td>생성자</td><td><code>__init__()</code>, 인스턴스 생성 시 속성값 <span class="a">초기화</span></td></tr>
+<tr><td>self</td><td>인스턴스 <span class="a">자신</span> 참조, 생성자의 첫 매개 변수</td></tr></table></div>
+</div>
+
+</div>
+</section>
+
+<!-- Ⅱ -->
+<section class="unit" id="u2">
+<div class="uh"><span class="num">Ⅱ</span><h2>인공지능</h2><p>지능 에이전트 · 기계학습 유형 · 모델 · 구현 과정</p></div>
+<div class="grid">
+
+<div class="blk"><h3>인공지능의 개념</h3>
+<p>인식, 학습, 추론, 문제 해결, 언어 구사 등 사람의 지능적인 판단과 결정을 컴퓨터 <span class="a">소프트웨어</span>로 구현하는 것.</p>
+<ul><li>인공지능 기술: 지능적 소프트웨어를 설계·제작하는 기술</li><li>인공지능 시스템: 그 기술로 만든 <span class="a">서비스나 제품</span></li></ul>
+</div>
+
+<div class="blk"><h3>에이전트 vs 지능 에이전트</h3>
+<p>에이전트: 누군가를 대신해 환경과 상호 작용하며 목적을 위해 <span class="a">자율적</span>으로 행동하는 시스템.</p>
+<div class="tw"><table class="t"><tr><th></th><th>에이전트</th><th>지능 에이전트</th></tr>
+<tr><td>행동 기준</td><td><span class="a">설정된 규칙</span></td><td><span class="a">학습과 추론</span></td></tr>
+<tr><td>행동 개선</td><td>제한적</td><td>스스로 개선</td></tr>
+<tr><td>새 전략</td><td>규칙에 의존</td><td>새 규칙·전략 생성</td></tr>
+</table></div><div class="cg"><b>에이전트</b><div class="chips"><span>온도 조절기</span></div></div><div class="cg"><b>지능 에이전트</b><div class="chips"><span>게임 속 캐릭터</span><span>사람</span></div></div>
+</div>
+
+<div class="blk"><h3>지능 에이전트의 작동과 구성</h3>
+<div class="flow"><div><b>인식</b>센서</div><span class="arr">›</span><div><b>상황 판단</b>정보 파악</div><span class="arr">›</span><div><b>행동 결정</b>학습·추론</div><span class="arr">›</span><div><b>행동</b>구동기</div></div>
+<p class="loop">환경과 지속적으로 상호 작용하며 반복</p>
+<div class="tw"><table class="t">
+<tr><td><span class="a">센서</span>(인식)</td><td>카메라, LSD 라이다, 자이로 센서</td></tr>
+<tr><td>인공지능</td><td>학습·추론·상황 판단</td></tr>
+<tr><td><span class="a">구동기</span>(행동)</td><td>바퀴, 먼지 브러시, 흡입기</td></tr></table></div>
+</div>
+
+<div class="blk"><h3>지능 에이전트의 특징 4가지</h3>
+<div class="tw"><table class="t">
+<tr><td><span class="a">자율성</span></td><td>사용자 대신 스스로 판단·행동</td></tr>
+<tr><td><span class="a">목적성</span></td><td>목적 달성 방향으로 행동</td></tr>
+<tr><td><span class="a">적응성</span></td><td>환경 변화에 따라 조정</td></tr>
+<tr><td><span class="a">사회성</span></td><td>에이전트끼리 데이터·정보 교환</td></tr></table></div>
+<p style="margin:8px 0 0">단일: 하나가 환경과 상호 작용 / 다중: 여러 에이전트가 <span class="a">경쟁 또는 협력</span></p><div class="cg"><b>단일 지능 에이전트</b><div class="chips"><span>로봇 청소기</span></div></div><div class="cg"><b>다중 지능 에이전트</b><div class="chips"><span>로봇 축구</span><span>재난 구조 드론</span></div></div>
+</div>
+
+<div class="blk"><h3>AI ⊃ 기계학습 ⊃ 딥러닝</h3>
+<div class="nest"><b>인공지능</b><small>인간의 지적 능력을 컴퓨터로 구현</small>
+  <div class="nest"><b>기계학습</b><small>컴퓨터 스스로 학습하는 알고리즘을 연구·구현</small>
+    <div class="nest"><b>딥러닝</b><small>뉴런과 비슷한 <span class="a">인공 신경망</span>으로 처리·학습</small></div></div></div>
+<p>기계학습: 데이터로 학습해 <span class="a">모델</span>을 만들고 새 데이터에 적용해 예측·판단.</p>
+<ul><li>필요한 경우: 뚜렷한 알고리즘이 없거나 복잡, 사람이 규칙·패턴을 찾기 어려움</li><li>명확한 규칙이 있으면 <span class="a">전통적인 프로그래밍</span>이 효율적일 수 있음</li></ul>
+<div class="cg"><b>기계학습 활용 사례</b><div class="chips"><span>북극 해빙 예측</span><span>추천 시스템</span><span>게임 AI 난이도</span><span>파피루스 해독</span><span>주식 이상 거래</span><span>의료 영상</span><span>의류 분류</span><span>쇼핑 추천</span><span>사진 번역</span></div></div>
+</div>
+
+<div class="blk wide"><h3>기계학습의 유형</h3>
+<div class="tree">
+  <div class="root">기계학습: 학습 정보와 학습 방식에 따라 구분</div>
+  <div class="br"><b><span class="a">지도학습</span></b>
+    <div class="flows">
+      <div class="fl"><span class="tk">훈련 데이터 <small>(특징, <span class="a">레이블</span>)</small></span><span class="ar">→</span><span class="res">관계 파악</span></div>
+      <div class="fl"><span class="tk">테스트 데이터 <small>(특징)</small></span><span class="ar">→</span><span class="res">레이블</span></div>
+    </div>
+    <div class="cg"><b>공통 사례</b><div class="chips"><span>날씨 예측</span><span>주택 가격 예측</span><span>스팸 메일 분류</span><span>질병 유무 판단</span><span>정상·불량 상품 선별</span></div></div>
+    <div class="sub"><b class="a">회귀</b>: 연속적 수치 예측<div class="chips"><span>미래의 강우량</span><span>운행 거리별 중고차 가격</span><span>원유 가격</span><span>시간별 지하철 승객</span><span>광고비별 판매량</span><span>면적별 주택 가격</span></div></div><div class="sub"><b class="a">분류</b>: 둘 이상의 범주 판별<div class="chips"><span>손 글씨 숫자 판별</span><span>스팸 메일 분류</span><span>암 양성 여부</span><span>질병 유무</span><span>의류 제품 분류</span><span>정상·불량 상품 선별</span></div></div></div>
+  <div class="br"><b><span class="a">비지도학습</span></b>
+    <div class="flows">
+      <div class="fl"><span class="tk">특징</span><span class="ar">→</span><span class="res"><span class="a">패턴·구조</span></span></div>
+    </div>
+    <div class="cg"><b>공통 사례</b><div class="chips"><span>신용 카드 이상 사용 탐지</span><span>고객 세분화 마케팅</span><span>도서 추천 시스템</span><span>매출 데이터 분석</span></div></div>
+    <div class="sub"><b class="a">군집화</b>: 비슷한 데이터끼리 그룹화 (거리 기준)<div class="chips"><span>고객 세분화 마케팅</span><span>비슷한 사진 그룹화</span><span>셔츠 크기 구분</span><span>화장품 브랜드 군집화</span></div></div><div class="sub"><b class="a">연관 규칙</b>: 항목 간 연관성<div class="chips"><span>음악 추천</span><span>도서 추천</span><span>웹툰 추천</span><span>상품 구매 관계 (우유 → 식빵)</span></div></div></div>
+  <div class="br"><b><span class="a">강화 학습</span></b>
+    <div class="flows">
+      <div class="fl"><span class="tk">시행착오</span><span class="ar"><small>보상</small>→</span><span class="res"><span class="a">최대화</span></span></div>
+    </div>
+    <div class="cg"><b>사례</b><div class="chips"><span>게임 AI 캐릭터</span><span>알파고</span><span>걷는 로봇</span><span>알파고 제로</span><span>알파 제로</span></div></div></div>
+</div>
+
+</div>
+
+<div class="blk wide"><h3>기계학습의 다양한 모델</h3>
+<div class="mg">
+
+<section class="mcol" aria-label="회귀 모델">
+<header><b>회귀</b>지도학습 · 연속적인 수치 예측</header>
+<div class="mlist">
+<div class="mdl"><h4><span class="a">선형 회귀</span></h4>
+<p>입력값과 결과값의 관계를 <span class="a">선형</span> 형태의 함수로 나타내 수치 예측.</p>
+<ul><li>단순 선형 회귀: 특징 <span class="a">1개</span></li><li>다중 선형 회귀: 특징 <span class="a">2개 이상</span></li></ul>
+</div>
+</div>
+</section>
+
+<section class="mcol cls" aria-label="분류 모델">
+<header><b>분류</b>지도학습 · 미리 정의된 범주(클래스) 판별</header>
+<div class="mlist">
+<div class="mdl"><h4><span class="a">결정트리</span></h4>
+<p>트리 구조 기반. <span class="a">루트</span>부터 분기마다 특징의 분류 기준을 만들어 단계적으로 분류.</p>
+<p>트리가 너무 깊으면 예측 성능이 <span class="a">떨어질</span> 수 있음. 회귀에도 적용 가능.</p>
+</div>
+<div class="mdl"><h4><span class="a">k-최근접 이웃(kNN)</span></h4>
+<ol class="steps"><li>기존 데이터와 예측 데이터의 거리 계산</li><li>가까운 순서로 <span class="a">k개</span> 이웃 선택</li><li>다수가 속한 클래스로 분류(<span class="a">다수결</span>)</li></ol>
+<ul><li>유클리디안 거리: 두 점의 <span class="a">직선거리</span></li><li>맨하튼 거리: 좌표축 방향 거리의 <span class="a">합</span></li><li>k 값에 따라 결과가 달라질 수 있음</li><li>모델 생성 전 데이터 <span class="a">정규화</span> 필요</li></ul>
+</div>
+<div class="mdl"><h4><span class="a">로지스틱 회귀</span></h4>
+<p>로지스틱 회귀 함수로 특정 클래스에 속할 <span class="a">확률</span>(0~1) 예측, 주로 <span class="a">0.5</span>를 기준으로 분류.</p>
+</div>
+<div class="mdl"><h4><span class="a">인공 신경망</span></h4>
+<p>뇌 신경계의 정보 처리 방식 모방, 수많은 <span class="a">노드</span>가 신호를 주고받음.</p>
+<p>연결이 깊어질수록 더 복잡한 문제 해결 가능, 깊어진 형태가 <span class="a">심층 신경망</span>.</p>
+</div>
+</div>
+</section>
+
+<section class="mcol" aria-label="군집화 모델">
+<header><b>군집화</b>비지도학습 · 비슷한 데이터끼리 그룹화</header>
+<div class="mlist">
+<div class="mdl"><h4><span class="a">K-평균 군집화</span></h4>
+<p>중심점과 데이터 사이의 거리로 K개 군집 구성.</p>
+<ol class="steps"><li>군집 개수 <span class="a">K</span> 결정</li><li>각 군집의 중심점 설정</li><li>가장 가까운 중심점에 데이터 할당</li><li>군집 데이터의 <span class="a">평균 위치</span>로 중심점 변경</li><li>중심점이 변하지 않을 때까지 반복</li></ol>
+</div>
+</div>
+</section>
+
+</div>
+</div>
+
+<div class="blk"><h3>기계학습 구현 과정</h3>
+<ol class="steps"><li><b>문제 정의</b>: 기계학습으로 해결 가능한지 판단</li><li><b>데이터 수집·전처리</b>: 통계 정보·핵심 속성 확인, <span class="a">결측치</span>·<span class="a">이상치</span> 처리</li><li><b>모델 선정·학습</b>: <span class="a">훈련 데이터</span>로 학습</li><li><b>모델 평가</b>: <span class="a">테스트 데이터</span>로 성능 평가·개선</li></ol>
+<ul style="margin-top:6px"><li>결측치: 값이 <span class="a">누락</span>된 부분 / 이상치: 일반 범위에서 크게 <span class="a">벗어난</span> 값</li><li>과정은 생략·반복될 수 있고, 평가 결과에 따라 모델·속성·설정값을 바꿔 개선</li></ul>
+</div>
+
+</div>
+</section>
+
+<!-- Ⅲ -->
+<section class="unit" id="u3">
+<div class="uh"><span class="num">Ⅲ</span><h2>디지털 문화</h2><p>디지털 기술 · 정보 보호 · 정보 보안 · 디지털 윤리</p></div>
+<div class="grid">
+
+<div class="blk"><h3>디지털 기술과 사회 변화</h3>
+<p>디지털 기술: 정보를 처리, 저장, 전송하는 장치를 연구·개발하는 기술.</p>
+<div class="cg"><b>디지털 기술 사례</b><div class="chips"><span>생성형 AI 그림 생성</span><span>공간 컴퓨팅 기술</span><span>AI 드론 배송</span><span>자율주행 기술</span><span>AI 원격 의료 서비스</span></div></div><p style="margin:6px 0 0"><b class="a">공간 컴퓨팅</b>: 디지털 콘텐츠를 실제 공간에 구현하는 기술.</p>
+<p style="margin-top:6px">진로: 데이터 과학자, 데이터 분석가, 가상 현실 설계자, 사물 인터넷 개발자, 사이버 보안 전문가, 클라우드 서비스 기술자</p>
+</div>
+
+<div class="blk"><h3>정보 보호와 개인정보 6분류</h3>
+<p>정보 보호: 유출, 훼손, 파괴, 변조, 접근 등 위협으로부터 보호하는 모든 행위. 대상은 <span class="a">개인정보</span>와 <span class="a">저작물</span>.</p>
+<p>개인정보: 개인을 알아볼 수 있는 정보 + <span class="a">다른 정보와 결합</span>하여 알아볼 수 있는 정보.</p>
+<div class="tw"><table class="t">
+<tr><td><span class="a">인적 사항</span></td><td>이름, 주민등록번호, 주소, 연락처, 가족 관계</td></tr>
+<tr><td><span class="a">신체적</span></td><td>얼굴, 홍채, 음성, 유전자, 지문, 의료 기록, 신체 검사</td></tr>
+<tr><td><span class="a">정신적</span></td><td>물품 대여 기록, 구매 내역, 검색 내역, 종교, 정당 가입</td></tr>
+<tr><td><span class="a">사회적</span></td><td>자격증, 학력, 병역, 직장, 전과, 과태료 납부</td></tr>
+<tr><td><span class="a">재산적</span></td><td>월급, 신용카드, 계좌번호, 소유 주택, 자동차</td></tr>
+<tr><td><span class="a">기타</span></td><td>이메일, 로그 파일 등 통신 정보, GPS 위치</td></tr></table></div>
+<p style="margin-top:6px">저작물: 사상·감정을 표현한 창작물. 어문, 음악, 미술, 연극, 건축, 사진, 영상, 도형, <span class="a">컴퓨터 프로그램</span>.</p>
+</div>
+
+<div class="blk"><h3>보호 · 공유해야 할 정보</h3>
+<div class="tw"><table class="t"><tr><th>보호해야 할 정보</th><th>공유해야 할 정보</th></tr>
+<tr><td>주소, 전화번호, 위치 정보</td><td>교통, 기후 정보</td></tr>
+<tr><td>저작권이 있는 프로그램</td><td>지하철 운행 시간, 식품 안전</td></tr>
+<tr><td>진료 기록 정보</td><td>지역 재난 정보</td></tr></table></div>
+<p style="margin-top:6px">공유할 수 있는 정보</p>
+<ul><li>민간 데이터: 기업·단체 보유, 혁신 서비스·새 비즈니스 모델</li><li>개인 데이터: 개인이 생성한 글, 동영상, 소스코드</li><li>오픈 소스 소프트웨어: 소스코드 공개, 누구나 무료로 이용·<span class="a">수정·재배포</span>, 여러 개발자 참여로 안정성 향상 가능</li></ul>
+<p>긍정: 지식 확장, 가치 창출, 사회적 연결, 공동 문제 해결 / 부정: 개인정보 유출, 지적 재산권 침해, 특허권 등 경제적 이익 감소, 기밀 정보 공개 → 보호와 공유의 <span class="a">균형</span>.</p>
+</div>
+
+<div class="blk"><h3>마이데이터 · 가명 · 익명</h3>
+<div class="tw"><table class="t">
+<tr><td>마이데이터</td><td>개인이 데이터를 공유할 기관을 <span class="a">선택</span>하고 이용할 권리를 가지는 사업</td></tr>
+<tr><td>가명 정보</td><td>식별 정보를 <span class="a">가린</span> 개인정보, <span class="a">학술·통계</span> 목적 활용</td></tr>
+<tr><td>익명 정보</td><td>핵심 식별 정보를 철저히 <span class="a">제거</span>, <span class="a">상업적</span>으로도 자유롭게 활용</td></tr></table></div>
+</div>
+
+<div class="blk"><h3>정보 보안의 3요소</h3>
+<p>정보 보안: 정보를 만들고 사용하는 과정에서 무단 유출, 파괴, 변조 등의 범죄를 방지하는 모든 행위. 모바일·사물 인터넷 기기 증가로 중요성 확대.</p>
+<div class="triad">
+<div><b><span class="a">기밀성</span></b>허가된 사용자만 접근<br>침해: 무단 열람</div>
+<div><b><span class="a">무결성</span></b>허가된 사용자만 변경<br>침해: 파일 무단 변경</div>
+<div><b><span class="a">가용성</span></b>필요한 시점에 사용<br>침해: DDoS</div>
+</div>
+</div>
+
+<div class="blk"><h3>보안 위협과 침해 사례</h3>
+<div class="tw"><table class="t">
+<tr><td><span class="a">위조</span></td><td>거짓 정보를 정상인 것처럼 만듦</td></tr>
+<tr><td><span class="a">변조</span></td><td>기존 정보의 내용을 바꿈</td></tr>
+<tr><td>접근과 유출</td><td>허락 없이 확인하거나 외부로 보냄</td></tr>
+<tr><td>훼손과 파괴</td><td>정상 작동하지 못하게 파괴</td></tr></table></div>
+<ul style="margin-top:6px"><li>사물 인터넷 해킹: 월패드, IP 카메라 → 사생활 유출</li><li>피싱: <span class="a">개인정보 + 낚시</span>, 이메일·메신저로 개인·금융 정보 탈취</li><li>스미싱: <span class="a">문자메시지(SMS) + 피싱</span>, 사칭 문자로 정보 탈취·소액 결제 유도</li></ul>
+</div>
+
+<div class="blk"><h3>정보 보안 기술</h3>
+<div class="tw"><table class="t">
+<tr><td><span class="a">방화벽</span></td><td>불법 침입 차단, 정상 접근만 허용</td></tr>
+<tr><td><span class="a">IDS</span></td><td>침입 탐지 시스템: 공격 탐지</td></tr>
+<tr><td><span class="a">IPS</span></td><td>침입 방지 시스템: 탐지 + 차단</td></tr>
+<tr><td><span class="a">사용자 인증</span></td><td>시스템에 접근하는 사람의 자격 확인</td></tr>
+<tr><td><span class="a">백신</span></td><td>기존 바이러스로 특징을 만들고 새 파일과 비교 → 탐지·경고·삭제</td></tr>
+<tr><td><span class="a">블록체인</span></td><td>P2P로 분산 저장, 추가·수정 시 고유 디지털 서명 변경 → 가로채기·수정·삭제 어려움</td></tr></table></div>
+</div>
+
+<div class="blk"><h3>사용자 인증 3가지</h3>
+<div class="tw"><table class="t"><tr><th>방식</th><th>사례</th></tr>
+<tr><td><span class="a">지식 기반</span> (아는 것)</td><td>패스워드, PIN, 패턴</td></tr>
+<tr><td><span class="a">소유 기반</span> (가진 것)</td><td>공인 인증서, 보안 토큰, 스마트 카드, OTP 카드</td></tr>
+<tr><td><span class="a">생체 기반</span> (신체)</td><td>지문, 정맥, 홍채, 얼굴 인식</td></tr></table></div>
+</div>
+
+<div class="blk"><h3>정보 보안 실천</h3>
+<div class="tw"><table class="t">
+<tr><td>백신</td><td>설치·실행, 최신 보안 패치, OS 업데이트</td></tr>
+<tr><td>개인 암호</td><td>비밀번호, 얼굴·지문 인식, PIN</td></tr>
+<tr><td>클라우드</td><td><span class="a">2단계 인증</span>, 접근·편집 권한 설정</td></tr>
+<tr><td>앱 관리</td><td><span class="a">출처 불분명한</span> 앱 자제, <span class="a">필요한 권한만</span> 허용</td></tr>
+<tr><td>웹 브라우저</td><td><span class="a">최신 버전</span>, <span class="a">HTTPS</span> 사이트</td></tr></table></div>
+<p style="margin-top:6px">2단계 인증: 스마트폰 등을 인증 기기로 설정 → 로그인 시 알림 → 허용해야 접근하는 이중 보안.</p>
+</div>
+
+<div class="blk"><h3>디지털 윤리</h3>
+<p>디지털 사회에서 올바른 행동과 가치를 지키는 것.</p>
+<p class="sh">기본 소양</p>
+<div class="tw"><table class="t"><tr><td><span class="a">개인정보 보호</span></td><td>개인정보의 중요성, 안전한 정보 공유</td></tr><tr><td><span class="a">온라인 행동과 네티켓</span></td><td>온라인 커뮤니티의 적절한 행동, 디지털 발자국·사이버 폭력 방지</td></tr><tr><td><span class="a">저작권 이해</span></td><td>저작권이 있는 콘텐츠의 올바른 사용</td></tr><tr><td><span class="a">미디어 문해력</span></td><td>정보를 찾고 평가, 가짜 뉴스 판별</td></tr><tr><td><span class="a">사이버 보안</span></td><td>바이러스, 피싱, 스팸 등으로부터 정보 보호</td></tr></table></div>
+<p class="sh">관련 용어</p>
+<div class="tw"><table class="t">
+<tr><td>디지털 발자국</td><td>인터넷에 남긴 SNS 계정, 게시글, 댓글 등의 기록</td></tr>
+<tr><td>가상 정체성</td><td>디지털 세상의 가상 자아</td></tr>
+<tr><td>사이버 불링</td><td><span class="a">불특정 다수</span>가 소수를 악성 댓글·메신저로 괴롭힘</td></tr>
+<tr><td>가짜 뉴스</td><td>사실이 아닌 내용을 뉴스처럼 꾸민 정보</td></tr></table></div>
+</div>
+
+<div class="blk"><h3>저작권과 CCL</h3>
+<p>저작권: 창작자가 저작물에 가지는 권리, 목적은 <span class="a">창작 활동 장려</span>.</p>
+<p>CCL: 저작자가 <span class="a">일정한 조건</span>에서 자유로운 이용을 허락하는 라이선스.</p>
+<ol class="steps"><li>이용할 저작물 결정</li><li>보호받는 대상인지 확인</li><li>이용 방식이 저작권법상 허용되는지 확인</li><li>저작권자에게 이용 허락</li><li>허락 범위에서 이용, <span class="a">저작자·출처 표시</span></li></ol>
+</div>
+
+</div>
+</section>
+
+<section class="unit">
+<p class="note">범위: 첨부 노트 기준. 코드 예제, 실습, Orange3, CSV·파일 입출력, 원본에 본문이 없는 컴퓨팅 시스템·데이터 단원과 문제 분석·추상화·알고리즘 단원은 제외하였다. 비교 연산자 행은 원본 표가 깨져 있어 파이썬 표준 비교 연산자로 채웠다.</p>
+</section>
+
+</main>
+
+<script>
+(function(){
+  var btn=document.getElementById('mask');
+  var KEY='info-cram-mask';
+  function set(on){
+    document.body.classList.toggle('masked',on);
+    btn.setAttribute('aria-pressed',on?'true':'false');
+    btn.textContent=on?'가림판 끄기':'가림판 켜기';
+    document.querySelectorAll('.a').forEach(function(el){
+      el.classList.remove('open');
+      if(on){el.setAttribute('tabindex','0');el.setAttribute('role','button');}
+      else{el.removeAttribute('tabindex');el.removeAttribute('role');}
+    });
+  }
+  btn.addEventListener('click',function(){
+    var on=!document.body.classList.contains('masked');
+    set(on);
+    try{localStorage.setItem(KEY,on?'1':'0');}catch(e){}
+  });
+  function reveal(el){if(document.body.classList.contains('masked'))el.classList.toggle('open');}
+  document.addEventListener('click',function(e){var t=e.target.closest('.a');if(t)reveal(t);});
+  document.addEventListener('keydown',function(e){
+    if((e.key==='Enter'||e.key===' ')&&e.target.classList&&e.target.classList.contains('a')){e.preventDefault();reveal(e.target);}
+  });
+  var saved=null;try{saved=localStorage.getItem(KEY);}catch(e){}
+  set(saved==='1');
+})();
+</script>
+</body>
+</html>
